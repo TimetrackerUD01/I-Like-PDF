@@ -1,21 +1,9 @@
 'use client'
 
-import { Metadata } from 'next'
 import { useLanguage } from '@/contexts/LanguageContext'
 import UploadSection from '@/components/UploadSection'
 import Breadcrumb from '@/components/Breadcrumb'
 import { HeaderAd, InContentAd, BetweenContentAd, MobileAd, DesktopAd } from '@/components/GoogleAdSense'
-import { seoMetadata } from '@/lib/seo'
-
-// This needs to be in layout.tsx for client components
-// export async function generateMetadata(): Promise<Metadata> {
-//   const seo = seoMetadata.en.convert
-//   return {
-//     title: seo.title,
-//     description: seo.description,
-//     keywords: seo.keywords.join(', ')
-//   }
-// }
 
 export default function ConvertPage() {
   const { t } = useLanguage()

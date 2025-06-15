@@ -1,8 +1,8 @@
 services:
   - type: web
-    name: eeley-pdf-converter
+    name: i-like-pdf
     env: node
-    repo: https://github.com/your-username/eeley-pdf.git
+    repo: https://github.com/TimetrackerUD01/I-Like-PDF.git
     buildCommand: npm install && npm run build
     startCommand: npm start
     envVars:
@@ -10,7 +10,9 @@ services:
         value: production
       - key: MAX_FILE_SIZE
         value: 10485760
+      - key: GOOGLE_ADSENSE_CLIENT_ID
+        value: ca-pub-1797172064583364
     healthCheckPath: /
     autoDeploy: true
-    domains:
-      - eeley-pdf.onrender.com
+    # Free plan - 750 hours/month = 24/7 coverage
+    plan: free

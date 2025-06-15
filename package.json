@@ -1,5 +1,5 @@
 {
-  "name": "i-love-pdf",
+  "name": "i-like-pdf",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -13,11 +13,14 @@
     "pdf",
     "converter",
     "file-compression",
-    "i-love-pdf"
+    "i-like-pdf",
+    "pdf-tools",
+    "online-converter",
+    "seo-optimized"
   ],
-  "author": "I Love PDF Team",
+  "author": "I Like PDF Team ❤️",
   "license": "ISC",
-  "description": "I Love PDF - Free Online PDF Tools & File Converter",
+  "description": "I Like PDF ❤️ - Free Online PDF Tools & File Converter with 8-language SEO optimization",
   "dependencies": {
     "@types/multer": "^1.4.13",
     "@types/node": "^24.0.1",
