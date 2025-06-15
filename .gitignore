@@ -47,3 +47,8 @@ coverage/
 
 # TypeScript
 *.tsbuildinfo
+
+# Documentation files (optional)
+README_EN.md
+FINAL_COMPLETION_SUMMARY.md
+DEPLOYMENT_READY.md
