@@ -1,160 +1,343 @@
 'use client'
 
-import { useLanguage } from '@/contexts/LanguageContext'
+import React, { useState } from 'react'
+import { Upload, FileText, Download, Scissors, AlertCircle } from 'lucide-react'
+import { HeaderAd, InContentAd, BetweenContentAd, MobileAd, DesktopAd } from '@/components/GoogleAdSense'
 
-export default function SplitPage() {
-  const { t } = useLanguage()
+interface SplitRange {
+  start: number
+  end: number
+  name: string
+}
+
+const SplitPage: React.FC = () => {
+  const [file, setFile] = useState<File | null>(null)
+  const [totalPages, setTotalPages] = useState<number>(0)
+  const [splitRanges, setSplitRanges] = useState<SplitRange[]>([])
+  const [processing, setProcessing] = useState(false)
+  const [results, setResults] = useState<string[]>([])
+  const [isDragOver, setIsDragOver] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [loadingPageCount, setLoadingPageCount] = useState(false)
+
+  const validateFile = (file: File): boolean => {
+    if (file.type !== 'application/pdf') {
+      setError('กรุณาเลือกไฟล์ PDF เท่านั้น')
+      return false
+    }
+    if (file.size > 10 * 1024 * 1024) { // 10MB
+      setError('ขนาดไฟล์ต้องไม่เกิน 10MB')
+      return false
+    }
+    return true
+  }
+
+  const handleFileUpload = async (uploadedFile: File) => {
+    if (!validateFile(uploadedFile)) return
+
+    setFile(uploadedFile)
+    setResults([])
+    setError(null)
+    setLoadingPageCount(true)
+    
+    // Get total pages from PDF
+    const formData = new FormData()
+    formData.append('file', uploadedFile)
+    formData.append('action', 'getPageCount')
+
+    try {
+      const response = await fetch('/api/pdf-info', {
+        method: 'POST',
+        body: formData,
+      })
+      const data = await response.json()
+      
+      if (data.success) {
+        setTotalPages(data.pageCount)
+      } else {
+        setError(data.error || 'ไม่สามารถอ่านไฟล์ PDF ได้')
+      }
+    } catch (error) {
+      console.error('Error getting page count:', error)
+      setError('เกิดข้อผิดพลาดในการอ่านไฟล์ PDF')
+    } finally {
+      setLoadingPageCount(false)
+    }
+  }
+
+  // Drag & Drop functionality
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(true)
+  }
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+  }
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    setIsDragOver(false)
+    
+    const droppedFiles = e.dataTransfer.files
+    if (droppedFiles.length > 0) {
+      handleFileUpload(droppedFiles[0])
+    }
+  }
+
+  const addSplitRange = () => {
+    setSplitRanges([...splitRanges, { start: 1, end: totalPages, name: `ส่วนที่ ${splitRanges.length + 1}` }])
+  }
+
+  const updateSplitRange = (index: number, field: keyof SplitRange, value: string | number) => {
+    const updated = [...splitRanges]
+    updated[index] = { ...updated[index], [field]: value }
+    setSplitRanges(updated)
+  }
+
+  const removeSplitRange = (index: number) => {
+    setSplitRanges(splitRanges.filter((_, i) => i !== index))
+  }
+
+  const validateRanges = (): boolean => {
+    for (const range of splitRanges) {
+      if (range.start < 1 || range.end > totalPages || range.start > range.end) {
+        setError(`ช่วงหน้าไม่ถูกต้อง: ${range.name}`)
+        return false
+      }
+    }
+    return true
+  }
+
+  const handleSplit = async () => {
+    if (!file || splitRanges.length === 0) {
+      setError('กรุณาเพิ่มช่วงหน้าที่ต้องการแยก')
+      return
+    }
+
+    if (!validateRanges()) return
+
+    setProcessing(true)
+    setError(null)
+    
+    const formData = new FormData()
+    formData.append('file', file)
+    formData.append('ranges', JSON.stringify(splitRanges))
+
+    try {
+      const response = await fetch('/api/split', {
+        method: 'POST',
+        body: formData,
+      })
+      
+      const data = await response.json()
+      if (data.success) {
+        setResults(data.files)
+      } else {
+        setError(data.error || 'เกิดข้อผิดพลาดในการแยกไฟล์')
+      }
+    } catch (error) {
+      console.error('Error splitting PDF:', error)
+      setError('เกิดข้อผิดพลาดในการเชื่อมต่อเซิร์ฟเวอร์')
+    } finally {
+      setProcessing(false)
+    }
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Hero Section */}
-      <section className="bg-gradient-to-r from-red-500 to-pink-500 text-white py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            {t.splitPdf}
-          </h1>
-          <p className="text-xl opacity-90 mb-8">
-            Split PDF files into separate pages or extract specific page ranges.
-          </p>
-        </div>
-      </section>
-
-      {/* Upload Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Upload PDF File to Split
-            </h2>
-            <p className="text-xl text-gray-600">
-              Select a PDF file and choose how you want to split it
-            </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8">
+      {/* Header Ad */}
+      <div className="bg-white py-2">
+        <HeaderAd />
+      </div>
+      
+      <div className="container mx-auto px-4 max-w-4xl">
+        <div className="text-center mb-8">
+          <Scissors className="h-16 w-16 text-blue-600 mx-auto mb-4" />
+          <h1 className="text-4xl font-bold text-gray-800 mb-2">แยก PDF</h1>
+          <p className="text-gray-600">แยกไฟล์ PDF เป็นหลายส่วนตามต้องการ</p>
+        </div>        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+            <div className="flex items-center">
+              <AlertCircle className="h-5 w-5 text-red-500 mr-2" />
+              <span className="text-red-700">{error}</span>
+            </div>
           </div>
+        )}
 
-          {/* File Upload Area */}
-          <div className="bg-white rounded-xl shadow-lg p-8 border-2 border-dashed border-gray-300 hover:border-red-400 transition-colors">
-            <div className="text-center">
-              <svg
-                className="mx-auto h-16 w-16 text-gray-400 mb-4"
-                stroke="currentColor"
-                fill="none"
-                viewBox="0 0 48 48"
+        {/* File Upload */}
+        <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+          <div 
+            className={`border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
+              isDragOver ? 'border-blue-500 bg-blue-50' : 'border-gray-300'
+            }`}
+            onDragEnter={handleDragEnter}
+            onDragLeave={handleDragLeave}
+            onDragOver={handleDragOver}
+            onDrop={handleDrop}
+          >
+            <input
+              type="file"
+              accept=".pdf"
+              onChange={(e) => e.target.files?.[0] && handleFileUpload(e.target.files[0])}
+              className="hidden"
+              id="file-upload"
+            />
+            <label htmlFor="file-upload" className="cursor-pointer">
+              <Upload className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+              <p className="text-lg mb-2">คลิกเพื่อเลือกไฟล์ PDF หรือลากไฟล์มาวาง</p>
+              <p className="text-sm text-gray-500">ขนาดไฟล์สูงสุด 10MB</p>
+            </label>
+          </div>
+          
+          {file && (
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg">
+              <div className="flex items-center">
+                <FileText className="h-5 w-5 text-blue-600 mr-2" />
+                <span className="font-medium">{file.name}</span>
+                <span className="ml-auto text-sm text-gray-500">
+                  {loadingPageCount ? (
+                    <div className="flex items-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600 mr-2"></div>
+                      กำลังโหลด...
+                    </div>
+                  ) : (
+                    `${totalPages} หน้า`
+                  )}
+                </span>
+              </div>
+            </div>          )}
+        </div>
+
+        {/* Mobile Ad */}
+        <div className="my-6">
+          <MobileAd />
+        </div>
+
+        {/* Split Ranges */}
+        {file && totalPages > 0 && !loadingPageCount && (
+          <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-semibold">กำหนดการแยกหน้า</h2>
+              <button
+                onClick={addSplitRange}
+                className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
-                <path
-                  d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-                  strokeWidth={2}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-              <p className="text-xl font-semibold text-gray-900 mb-2">
-                Drop PDF file here
-              </p>
-              <p className="text-gray-600 mb-4">or</p>
-              <button className="bg-red-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-600 transition">
-                Choose PDF File
+                เพิ่มช่วงหน้า
               </button>
-              <p className="text-sm text-gray-500 mt-4">
-                Supports PDF files (Max 10MB)
-              </p>
             </div>
+
+            {splitRanges.map((range, index) => (
+              <div key={index} className="border rounded-lg p-4 mb-4 bg-gray-50">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">ชื่อไฟล์</label>
+                    <input
+                      type="text"
+                      value={range.name}
+                      onChange={(e) => updateSplitRange(index, 'name', e.target.value)}
+                      className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">หน้าเริ่มต้น</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max={totalPages}
+                      value={range.start}
+                      onChange={(e) => updateSplitRange(index, 'start', parseInt(e.target.value) || 1)}
+                      className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">หน้าสุดท้าย</label>
+                    <input
+                      type="number"
+                      min="1"
+                      max={totalPages}
+                      value={range.end}
+                      onChange={(e) => updateSplitRange(index, 'end', parseInt(e.target.value) || totalPages)}
+                      className="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                  <div className="flex items-end">
+                    <button
+                      onClick={() => removeSplitRange(index)}
+                      className="bg-red-500 text-white px-3 py-2 rounded-md hover:bg-red-600 w-full transition-colors"
+                    >
+                      ลบ
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {splitRanges.length > 0 && (
+              <button
+                onClick={handleSplit}
+                disabled={processing}
+                className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              >
+                {processing ? (
+                  <div className="flex items-center justify-center">
+                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+                    กำลังแยกไฟล์...
+                  </div>
+                ) : (
+                  'แยก PDF'
+                )}
+              </button>            )}
           </div>
+        )}
+
+        {/* BetweenContent Ad */}
+        <div className="my-6">
+          <BetweenContentAd />
         </div>
-      </section>
 
-      {/* Split Options */}
-      <section className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Split Options
-            </h2>
-            <p className="text-xl text-gray-600">
-              Choose how you want to split your PDF
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 14H4V5h12v12z"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Split by Pages</h3>
-              <p className="text-gray-600">Extract specific pages (e.g., pages 1-5, 10-15)</p>
+        {/* Results */}
+        {results.length > 0 && (
+          <div className="bg-white rounded-lg shadow-lg p-6">
+            <h2 className="text-xl font-semibold mb-4">ไฟล์ที่แยกแล้ว</h2>
+            <div className="space-y-2">
+              {results.map((filename, index) => (
+                <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                  <span className="font-medium">{filename}</span>
+                  <a
+                    href={`/api/download/${filename}`}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center transition-colors"
+                  >
+                    <Download className="h-4 w-4 mr-2" />
+                    ดาวน์โหลด
+                  </a>
+                </div>
+              ))}
             </div>
+          </div>        )}
 
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Split into Pages</h3>
-              <p className="text-gray-600">Split each page into separate PDF files</p>
-            </div>
-
-            <div className="bg-gray-50 p-6 rounded-lg">
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M2 6a2 2 0 012-2h12a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zm2 0v8h12V6H4z" clipRule="evenodd"/>
-                </svg>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Split by Size</h3>
-              <p className="text-gray-600">Split into smaller files of specified size</p>
-            </div>
-          </div>
+        {/* Desktop Ad */}
+        <div className="my-6 hidden md:block">
+          <DesktopAd />
         </div>
-      </section>
 
-      {/* How it Works */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              How PDF Splitting Works
-            </h2>
-            <p className="text-xl text-gray-600">
-              Easy steps to split your PDF files
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">1</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Upload</h3>
-              <p className="text-gray-600">Select your PDF file</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">2</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Choose</h3>
-              <p className="text-gray-600">Select split method</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">3</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Process</h3>
-              <p className="text-gray-600">Split automatically</p>
-            </div>
-
-            <div className="text-center">
-              <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="text-2xl font-bold text-red-600">4</span>
-              </div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Download</h3>
-              <p className="text-gray-600">Get split files</p>
-            </div>
-          </div>
+        {/* InContent Ad */}
+        <div className="my-6">
+          <InContentAd />
         </div>
-      </section>
+      </div>
     </div>
   )
 }
+
+export default SplitPage
