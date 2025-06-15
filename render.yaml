@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: eeley-pdf-converter
+    env: node
+    repo: https://github.com/your-username/eeley-pdf.git
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MAX_FILE_SIZE
+        value: 10485760
+    healthCheckPath: /
+    autoDeploy: true
+    domains:
+      - eeley-pdf.onrender.com

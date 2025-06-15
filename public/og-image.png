@@ -1,0 +1,7 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F3F4F6"/>
+  <rect x="100" y="100" width="1000" height="430" rx="20" fill="#EF4444"/>
+  <text x="600" y="280" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="72" font-weight="bold">I Love PDF</text>
+  <text x="600" y="340" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="32">Free Online PDF Tools & File Converter</text>
+  <text x="600" y="390" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="24">Convert • Compress • Merge • Split</text>
+</svg>

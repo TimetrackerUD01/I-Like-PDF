@@ -1,0 +1,5 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="180" height="180" rx="30" fill="#EF4444"/>
+  <path d="M60 45H120C129.9 45 138 53.1 138 63V117C138 126.9 129.9 135 120 135H60C50.1 135 42 126.9 42 117V63C42 53.1 50.1 45 60 45Z" stroke="white" stroke-width="3" fill="none"/>
+  <text x="90" y="98" text-anchor="middle" fill="white" font-family="Inter, sans-serif" font-size="18" font-weight="bold">PDF</text>
+</svg>
