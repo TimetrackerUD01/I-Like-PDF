@@ -2,12 +2,17 @@
 
 import { useLanguage } from '@/contexts/LanguageContext'
 import Link from 'next/link'
+import { HeaderAd, InContentAd, BetweenContentAd, MobileAd, DesktopAd } from '@/components/GoogleAdSense'
 
 export default function HelpPage() {
   const { t } = useLanguage()
-
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header Ad */}
+      <div className="bg-white py-2">
+        <HeaderAd />
+      </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -16,9 +21,13 @@ export default function HelpPage() {
           </h1>
           <p className="text-xl opacity-90 mb-8">
             {t.helpContent}
-          </p>
-        </div>
+          </p>        </div>
       </section>
+
+      {/* Mobile Ad */}
+      <div className="py-4">
+        <MobileAd />
+      </div>
 
       {/* FAQ Section */}
       <section className="py-16 bg-white">
@@ -26,16 +35,14 @@ export default function HelpPage() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
               Frequently Asked Questions
-            </h2>
-            <p className="text-xl text-gray-600">
-              Find answers to common questions about I Love PDF
+            </h2>            <p className="text-xl text-gray-600">
+              Find answers to common questions about I Like PDF ❤️
             </p>
           </div>
 
           <div className="space-y-8">
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Is I Love PDF really free to use?
+            <div className="bg-gray-50 rounded-lg p-6">              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Is I Like PDF really free to use?
               </h3>
               <p className="text-gray-600">
                 Yes! All our PDF tools are completely free to use. There are no hidden charges, 
@@ -94,9 +101,8 @@ export default function HelpPage() {
               </p>
             </div>
 
-            <div className="bg-gray-50 rounded-lg p-6">
-              <h3 className="text-lg font-semibold text-gray-900 mb-3">
-                Can I use I Love PDF on mobile devices?
+            <div className="bg-gray-50 rounded-lg p-6">              <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                Can I use I Like PDF on mobile devices?
               </h3>
               <p className="text-gray-600">
                 Yes! Our website is fully responsive and works on all devices including smartphones, 
@@ -107,15 +113,18 @@ export default function HelpPage() {
             <div className="bg-gray-50 rounded-lg p-6">
               <h3 className="text-lg font-semibold text-gray-900 mb-3">
                 What languages do you support?
-              </h3>
-              <p className="text-gray-600">
-                I Love PDF supports multiple languages including English, Thai, Chinese, Japanese, 
+              </h3>              <p className="text-gray-600">
+                I Like PDF supports multiple languages including English, Thai, Chinese, Japanese, 
                 Korean, Spanish, French, and German. Use the language selector in the header to switch.
               </p>
-            </div>
-          </div>
+            </div>          </div>
         </div>
       </section>
+
+      {/* BetweenContent Ad */}
+      <div className="py-4">
+        <BetweenContentAd />
+      </div>
 
       {/* Tools Overview */}
       <section className="py-16 bg-gray-50">
@@ -170,9 +179,13 @@ export default function HelpPage() {
               <h3 className="font-semibold text-gray-900 mb-2">Split PDF</h3>
               <p className="text-gray-600 text-sm">Split PDF into separate pages or page ranges</p>
             </Link>
-          </div>
-        </div>
+          </div>        </div>
       </section>
+
+      {/* Desktop Ad */}
+      <div className="py-4 hidden md:block">
+        <DesktopAd />
+      </div>
 
       {/* Contact */}
       <section className="py-16 bg-white">
@@ -200,10 +213,14 @@ export default function HelpPage() {
               >
                 Contact Form
               </Link>
-            </div>
-          </div>
+            </div>          </div>
         </div>
       </section>
+
+      {/* InContent Ad */}
+      <div className="py-4">
+        <InContentAd />
+      </div>
     </div>
   )
 }

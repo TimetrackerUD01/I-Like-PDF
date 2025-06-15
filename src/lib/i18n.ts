@@ -109,15 +109,14 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'Split PDF',
     tools: 'Tools',
     help: 'Help',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: 'Free Online PDF Tools & File Converter',
     heroDescription: 'Convert, compress, merge, and split PDF files easily. All tools you need for your PDF files in one place.',
     getStarted: 'Get Started',
     
     // Features
-    featuresTitle: 'Why Choose I Love PDF?',
+    featuresTitle: 'Why Choose I Like PDF? ❤️',
     convertTitle: 'Convert PDF Files',
     convertDesc: 'Convert PDF to Word, Excel, PowerPoint, and more formats easily.',
     compressTitle: 'Compress PDF Size',
@@ -169,18 +168,17 @@ export const translations: Record<string, Translations> = {
     termsOfService: 'Terms of Service',
     contact: 'Contact',
     allRightsReserved: 'All rights reserved.',
-    
-    // Additional Pages
-    aboutTitle: 'About I Love PDF',
-    aboutContent: 'I Love PDF is a comprehensive online platform for all your PDF needs. We provide free, secure, and easy-to-use tools for converting, compressing, merging, and splitting PDF files.',
+      // Additional Pages
+    aboutTitle: 'About I Like PDF ❤️',
+    aboutContent: 'I Like PDF is a comprehensive online platform for all your PDF needs. We provide free, secure, and easy-to-use tools for converting, compressing, merging, and splitting PDF files.',
     privacyTitle: 'Privacy Policy',
     privacyContent: 'Your privacy is important to us. All uploaded files are automatically deleted after processing to ensure your data security.',
     termsTitle: 'Terms of Service',
-    termsContent: 'By using I Love PDF, you agree to our terms of service. Please use our tools responsibly and respect copyright laws.',
+    termsContent: 'By using I Like PDF, you agree to our terms of service. Please use our tools responsibly and respect copyright laws.',
     contactTitle: 'Contact Us',
     contactContent: 'Have questions or suggestions? We\'d love to hear from you!',
     helpTitle: 'Help & FAQ',
-    helpContent: 'Find answers to frequently asked questions about using I Love PDF tools.'
+    helpContent: 'Find answers to frequently asked questions about using I Like PDF tools.'
   },
   
   th: {
@@ -192,15 +190,14 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'แยก PDF',
     tools: 'เครื่องมือ',
     help: 'ช่วยเหลือ',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: 'เครื่องมือ PDF ออนไลน์ฟรี และตัวแปลงไฟล์',
     heroDescription: 'แปลง บีบอัด รวม และแยกไฟล์ PDF ได้อย่างง่ายดาย เครื่องมือทั้งหมดที่คุณต้องการสำหรับไฟล์ PDF ในที่เดียว',
     getStarted: 'เริ่มต้นใช้งาน',
     
     // Features
-    featuresTitle: 'ทำไมต้องเลือก I Love PDF?',
+    featuresTitle: 'ทำไมต้องเลือก I Like PDF? ❤️',
     convertTitle: 'แปลงไฟล์ PDF',
     convertDesc: 'แปลง PDF เป็น Word, Excel, PowerPoint และรูปแบบอื่นๆ ได้อย่างง่ายดาย',
     compressTitle: 'บีบอัดขนาด PDF',
@@ -274,9 +271,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: '拆分PDF',
     tools: '工具',
     help: '帮助',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: '免费在线PDF工具和文件转换器',
     heroDescription: '轻松转换、压缩、合并和拆分PDF文件。满足您所有PDF需求的完整解决方案。',
     getStarted: '开始使用',
@@ -357,9 +353,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'PDF分割',
     tools: 'ツール',
     help: 'ヘルプ',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: '無料オンラインPDFツールとファイルコンバーター',
     heroDescription: 'PDFファイルを簡単に変換、圧縮、結合、分割できます。すべてのPDFニーズに対応する完全なソリューション。',
     getStarted: '使い始める',
@@ -439,9 +434,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'PDF 분할',
     tools: '도구',
     help: '도움말',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: '무료 온라인 PDF 도구 및 파일 변환기',
     heroDescription: 'PDF 파일을 쉽게 변환, 압축, 결합 및 분할하세요. 모든 PDF 요구 사항을 위한 완전한 솔루션입니다.',
     getStarted: '시작하기',
@@ -522,9 +516,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'Dividir PDF',
     tools: 'Herramientas',
     help: 'Ayuda',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: 'Herramientas PDF gratuitas en línea y convertidor de archivos',
     heroDescription: 'Convierte, comprime, combina y divide archivos PDF con facilidad. La solución completa para todas tus necesidades de PDF.',
     getStarted: 'Comenzar',
@@ -605,9 +598,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'Diviser PDF',
     tools: 'Outils',
     help: 'Aide',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: 'Outils PDF gratuits en ligne et convertisseur de fichiers',
     heroDescription: 'Convertissez, compressez, fusionnez et divisez facilement les fichiers PDF. La solution complète pour tous vos besoins PDF.',
     getStarted: 'Commencer',
@@ -688,9 +680,8 @@ export const translations: Record<string, Translations> = {
     splitPdf: 'PDF Teilen',
     tools: 'Werkzeuge',
     help: 'Hilfe',
-    
-    // Hero Section
-    heroTitle: 'I Love PDF',
+      // Hero Section
+    heroTitle: 'I Like PDF ❤️',
     heroSubtitle: 'Kostenlose Online-PDF-Tools und Dateikonverter',
     heroDescription: 'Konvertieren, komprimieren, zusammenführen und teilen Sie PDF-Dateien mit Leichtigkeit. Die komplette Lösung für alle Ihre PDF-Bedürfnisse.',
     getStarted: 'Loslegen',

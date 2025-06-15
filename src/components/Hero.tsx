@@ -26,11 +26,25 @@ export default function Hero() {
           <p className="text-xl sm:text-2xl text-gray-700 mb-4 font-medium">
             {t.heroSubtitle}
           </p>
-          
-          {/* Description */}
-          <p className="text-lg text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            {/* Description with SEO keywords */}
+          <p className="text-lg text-gray-600 mb-8 max-w-3xl mx-auto leading-relaxed">
             {t.heroDescription}
           </p>
+          
+          {/* SEO-optimized features list */}
+          <div className="mb-12 max-w-4xl mx-auto">
+            <p className="text-gray-700 text-base mb-4">
+              <strong>Free PDF Tools Online:</strong> Convert PDF to Word, Excel, PowerPoint • Compress PDF files • Merge multiple PDFs • Split PDF pages • 100% secure & no registration required
+            </p>
+            <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-600">
+              <span className="bg-blue-50 px-3 py-1 rounded-full border border-blue-200">PDF to Word Converter</span>
+              <span className="bg-green-50 px-3 py-1 rounded-full border border-green-200">PDF Compressor</span>
+              <span className="bg-purple-50 px-3 py-1 rounded-full border border-purple-200">PDF Merger</span>
+              <span className="bg-orange-50 px-3 py-1 rounded-full border border-orange-200">PDF Splitter</span>
+              <span className="bg-pink-50 px-3 py-1 rounded-full border border-pink-200">PDF to Excel</span>
+              <span className="bg-indigo-50 px-3 py-1 rounded-full border border-indigo-200">PDF to PowerPoint</span>
+            </div>
+          </div>
           
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">

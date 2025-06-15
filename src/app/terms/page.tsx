@@ -1,16 +1,25 @@
 'use client'
 
 import { useLanguage } from '@/contexts/LanguageContext'
+import { HeaderAd, InContentAd, BetweenContentAd, MobileAd, DesktopAd } from '@/components/GoogleAdSense'
 
 export default function TermsPage() {
   const { t } = useLanguage()
-
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header Ad */}
+      <div className="bg-white py-2">
+        <HeaderAd />
+      </div>
+
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-        <div className="bg-white rounded-lg shadow-sm p-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-8">{t.termsTitle}</h1>
+        <div className="bg-white rounded-lg shadow-sm p-8">          <h1 className="text-3xl font-bold text-gray-900 mb-8">{t.termsTitle}</h1>
           
+          {/* Mobile Ad */}
+          <div className="mb-6">
+            <MobileAd />
+          </div>
+
           <div className="space-y-6 text-gray-700">
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Acceptance of Terms</h2>
@@ -21,10 +30,9 @@ export default function TermsPage() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Service Description</h2>
-              <p>
+              <h2 className="text-2xl font-semibold text-gray-900 mb-4">Service Description</h2>              <p>
                 I Love PDF provides free online tools for PDF file manipulation including conversion, 
-                compression, merging, and splitting. Our services are provided "as is" without any 
+                compression, merging, and splitting. Our services are provided &quot;as is&quot; without any 
                 warranties.
               </p>
             </section>
@@ -45,8 +53,12 @@ export default function TermsPage() {
               <p>
                 Files must be under 10MB in size and in supported formats. We reserve the right to 
                 refuse processing of any file that violates our terms or poses security risks.
-              </p>
-            </section>
+              </p>            </section>
+
+            {/* BetweenContent Ad */}
+            <div className="my-6">
+              <BetweenContentAd />
+            </div>
 
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Intellectual Property</h2>
@@ -62,8 +74,12 @@ export default function TermsPage() {
               <p>
                 I Love PDF shall not be liable for any direct, indirect, incidental, or consequential 
                 damages arising from the use of our services. Use our tools at your own risk.
-              </p>
-            </section>
+              </p>            </section>
+
+            {/* Desktop Ad */}
+            <div className="my-6 hidden md:block">
+              <DesktopAd />
+            </div>
 
             <section>
               <h2 className="text-2xl font-semibold text-gray-900 mb-4">Service Availability</h2>
@@ -94,8 +110,12 @@ export default function TermsPage() {
             <p className="text-sm text-red-800">
               <strong>Last updated:</strong> December 2024. Please review these terms regularly 
               as they may be updated to reflect changes in our services or legal requirements.
-            </p>
-          </div>
+            </p>          </div>
+        </div>
+
+        {/* InContent Ad */}
+        <div className="mt-8">
+          <InContentAd />
         </div>
       </div>
     </div>

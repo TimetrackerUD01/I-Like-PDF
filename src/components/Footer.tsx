@@ -12,14 +12,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center space-x-3 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+            <div className="flex items-center space-x-3 mb-4">              <div className="w-10 h-10 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
                 <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 14H4V5h12v12z"/>
+                  <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd"/>
                 </svg>
               </div>
               <div>
-                <h3 className="text-lg font-bold">I Love PDF</h3>
+                <h3 className="text-lg font-bold">I Like PDF ❤️</h3>
                 <p className="text-gray-300 text-sm">Free Online PDF Tools</p>
               </div>
             </div>
@@ -69,7 +68,7 @@ export default function Footer() {
 
         <div className="border-t border-gray-700 mt-8 pt-8 text-center">
           <p className="text-gray-300">
-            © 2025 I Love PDF. {t.allRightsReserved} | <Link href="/privacy" className="hover:text-white">{t.privacyPolicy}</Link> | <Link href="/terms" className="hover:text-white">{t.termsOfService}</Link>
+            © 2025 I Like PDF ❤️. {t.allRightsReserved} | <Link href="/privacy" className="hover:text-white">{t.privacyPolicy}</Link> | <Link href="/terms" className="hover:text-white">{t.termsOfService}</Link>
           </p>
         </div>
       </div>

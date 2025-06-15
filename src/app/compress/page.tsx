@@ -2,12 +2,18 @@
 
 import { useLanguage } from '@/contexts/LanguageContext'
 import UploadSection from '@/components/UploadSection'
+import { HeaderAd, InContentAd, BetweenContentAd, MobileAd, DesktopAd } from '@/components/GoogleAdSense'
 
 export default function CompressPage() {
   const { t } = useLanguage()
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Header Ad */}
+      <div className="bg-white py-2">
+        <HeaderAd />
+      </div>
+
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-green-500 to-emerald-500 text-white py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
@@ -20,9 +26,19 @@ export default function CompressPage() {
         </div>
       </section>
 
+      {/* Mobile Ad */}
+      <div className="py-4">
+        <MobileAd />
+      </div>
+
       {/* Upload Section */}
       <div id="upload">
         <UploadSection />
+      </div>
+
+      {/* Between Content Ad */}
+      <div className="py-6">
+        <BetweenContentAd />
       </div>
 
       {/* Features */}
@@ -90,6 +106,16 @@ export default function CompressPage() {
           </div>
         </div>
       </section>
+
+      {/* Desktop Ad */}
+      <div className="py-6 hidden md:block">
+        <DesktopAd />
+      </div>
+
+      {/* In Content Ad */}
+      <div className="py-8 bg-gray-50">
+        <InContentAd />
+      </div>
     </div>
   )
 }
